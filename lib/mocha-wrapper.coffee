@@ -1,20 +1,44 @@
+fs    = require 'fs'
+path  = require 'path'
 util  = require 'util'
 spawn = require('child_process').spawn
 
-exports.getPath = ->
-  '/Users/Romain/Documents/dev/mocha-test-runner/node_modules/.bin/mocha'
+closestPackage = (folder) ->
+  pkg = path.join folder, 'package.json'
+  console.log 'pkg', pkg
+  if fs.existsSync pkg
+    console.log 'found!'
+    folder
+  else if folder is '/'
+    null
+  else
+    closestPackage path.dirname(folder)
 
-exports.run = (testName, callback) ->
+exports.run = (testFile, testName, callback) ->
 
-  console.log process.env
-  folder = '/Users/Romain/Documents/dev/mocha-test-runner'
-  binary = folder + '/node_modules/.bin/mocha'
-  flags = ['--no-colors']
+  root = closestPackage testFile
+  if not root
+    return callback 'Could not find package.json'
+
+  relativeTest = path.relative root, testFile
+  binary = path.join 'node_modules', '.bin', 'mocha'
+
+  callback 'Root folder: ' + root + '\n'
+  callback 'Test file: ' + relativeTest + '\n'
+  callback 'Selected test: ' + (testName or 'ALL') + '\n'
+  callback '\n'
+
+  flags = [
+    relativeTest
+    '--no-colors'
+  ]
+
   if testName
     flags.push '--grep'
     flags.push testName
+
   opts =
-    cwd: folder
+    cwd: root
     env: process.env
 
   mocha = spawn binary, flags, opts

@@ -18,7 +18,7 @@ module.exports =
     test = selectedTest.fromEditor editor
 
     results = document.createElement 'pre'
-    results.innerHTML = "Running test: #{test or 'ALL'}\n"
+    results.innerHTML = ''
     results.classList.add 'results'
 
     create = (err, pane) ->
@@ -26,7 +26,7 @@ module.exports =
       pane[0].classList.add 'mocha-test-runner'
       pane.append results
 
-      mochaWrapper.run test, (data) -> results.innerHTML += data
+      mochaWrapper.run editor.getPath(), test, (data) -> results.innerHTML += data
       # results.classList.add 'success'
 
     closed = ->
