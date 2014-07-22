@@ -1,0 +1,16 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  '.overlayer':
+      'Run Mocha tests': 'mocha-test-runner:run'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'mocha-test-runner'
+      'submenu': [
+        { 'label': 'Run', 'command': 'mocha-test-runner:run' }
+      ]
+    ]
+  }
+]

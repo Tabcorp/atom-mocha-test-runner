@@ -1,0 +1,21 @@
+{
+  "name": "mocha-test-runner",
+  "main": "./lib/mocha-test-runner",
+  "version": "0.1.0",
+  "description": "Run Mocha tests from within Atom",
+  "activationEvents": [
+    "mocha-test-runner:run"
+  ],
+  "repository": "https://github.com/TabDigital/atom-mocha-test-runner",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "atom-pane": "~1.0.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.20.1",
+    "coffee-script": "~1.7.1"
+  }
+}
