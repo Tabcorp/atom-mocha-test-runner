@@ -1,5 +1,6 @@
 path = require 'path'
 createPane = require 'atom-pane'
+context = require './context'
 selectedTest = require './selected-test'
 MochaWrapper = require './mocha-wrapper'
 
@@ -15,8 +16,7 @@ module.exports =
   run: ->
 
     editor = atom.workspaceView.getActivePaneItem()
-    test = selectedTest.fromEditor editor
-
+    
     results = document.createElement 'pre'
     results.innerHTML = ''
     results.classList.add 'results'
@@ -27,7 +27,9 @@ module.exports =
       pane[0].classList.add 'mocha-test-runner'
       pane.append results
 
-      wrapper = new MochaWrapper editor.getPath(), test
+      ctx = context.find editor.getPath()
+      testName = selectedTest.fromEditor editor
+      wrapper = new MochaWrapper ctx, testName
       wrapper.on 'output', (text) -> results.innerHTML += text
       wrapper.on 'error',   (err) -> results.innerHTML += 'Failed to run the test: ' + err
       wrapper.on 'success', -> results.classList.add 'success'

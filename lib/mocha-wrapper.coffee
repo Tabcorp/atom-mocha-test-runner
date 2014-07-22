@@ -6,20 +6,16 @@ spawn  = require('child_process').spawn
 
 module.exports = class MochaWrapper extends events.EventEmitter
 
-  constructor: (@testFile, @testName) ->
+  constructor: (@context, @testName) ->
 
   run: ->
 
-    root = closestPackage @testFile
-    return @emit 'error', 'Could not find package.json' unless root
-    relativeTestFile = path.relative root, @testFile
-
-    @emit 'output', 'Root folder: ' + root + '\n'
-    @emit 'output', 'Test file: ' + relativeTestFile + '\n'
+    @emit 'output', 'Root folder: ' + @context.root + '\n'
+    @emit 'output', 'Test file: ' + @context.test + '\n'
     @emit 'output', 'Selected test: ' + (@testName or '<all>') + '\n'
 
     flags = [
-      relativeTestFile
+      @context.test
       '--no-colors'
     ]
 
@@ -28,11 +24,10 @@ module.exports = class MochaWrapper extends events.EventEmitter
       flags.push @testName
 
     opts =
-      cwd: root
+      cwd: @context.root
       env: process.env
 
-    binary = path.join 'node_modules', '.bin', 'mocha'
-    mocha = spawn binary, flags, opts
+    mocha = spawn @context.mocha, flags, opts
     mocha.stdout.on 'data', (data) => @emit 'output', data.toString()
     mocha.stderr.on 'data', (data) => @emit 'output', data.toString()
 
@@ -41,14 +36,3 @@ module.exports = class MochaWrapper extends events.EventEmitter
         @emit 'success'
       else
         @emit 'failure'
-
-  closestPackage = (folder) ->
-    pkg = path.join folder, 'package.json'
-    console.log 'pkg', pkg
-    if fs.existsSync pkg
-      console.log 'found!'
-      folder
-    else if folder is '/'
-      null
-    else
-      closestPackage path.dirname(folder)
