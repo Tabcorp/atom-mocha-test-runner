@@ -10,9 +10,9 @@ module.exports = class MochaWrapper extends events.EventEmitter
 
   run: ->
 
-    @emit 'output', 'Root folder: ' + @context.root + '\n'
-    @emit 'output', 'Test file: ' + @context.test + '\n'
-    @emit 'output', 'Selected test: ' + (@testName or '<all>') + '\n'
+    console.debug 'Root folder:', @context.root
+    console.debug 'Test file:', @context.test
+    console.debug 'Selected test:', @testName or '<all>'
 
     flags = [
       @context.test

@@ -3,47 +3,39 @@ createPane = require 'atom-pane'
 context = require './context'
 selectedTest = require './selected-test'
 MochaWrapper = require './mocha-wrapper'
+ResultView = require './result-view'
+
+resultView = null
 
 module.exports =
 
   activate: (state) ->
     atom.workspaceView.command "mocha-test-runner:run", => @run()
+    resultView = new ResultView(state)
 
   deactivate: ->
+    resultView.detach()
+    resultView = null
 
   serialize: ->
+    resultView.serialize()
 
   run: ->
 
-    editor = atom.workspaceView.getActivePaneItem()
-    
-    results = document.createElement 'pre'
-    results.innerHTML = ''
-    results.classList.add 'results'
+    resultView.reset()
+    if not resultView.hasParent()
+      atom.workspaceView.prependToBottom resultView
 
-    create = (err, pane) ->
+    editor   = atom.workspaceView.getActivePaneItem()
+    ctx      = context.find editor.getPath()
+    testName = selectedTest.fromEditor editor
+    wrapper  = new MochaWrapper ctx, testName
 
-      if err then throw err
-      pane[0].classList.add 'mocha-test-runner'
-      pane.append results
+    wrapper.on 'error',   (err) ->
+      resultView.addLine('Failed to run the test: ' + err)
+      resultView.failed()
+    wrapper.on 'output', (text) -> resultView.addLine(text)
+    wrapper.on 'success', -> resultView.success()
+    wrapper.on 'failure', -> resultView.failed()
 
-      ctx = context.find editor.getPath()
-      testName = selectedTest.fromEditor editor
-      wrapper = new MochaWrapper ctx, testName
-      wrapper.on 'output', (text) -> results.innerHTML += text
-      wrapper.on 'error',   (err) -> results.innerHTML += 'Failed to run the test: ' + err
-      wrapper.on 'success', -> results.classList.add 'success'
-      wrapper.on 'failure', -> results.classList.add 'failure'
-      wrapper.run()
-
-    closed = ->
-      results.parentNode.removeChild results
-
-    createPane paneOptions(editor), create, closed
-
-paneOptions = (editor) ->
-  searchAllPanes: true
-  changeFocus: false
-  uri: 'mocha-test-runner://' + editor.getPath()
-  title: 'Mocha: ' + path.basename(editor.getPath())
-  split: 'right'
+    wrapper.run()
