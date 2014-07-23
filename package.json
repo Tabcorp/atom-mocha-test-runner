@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "description": "Run Mocha tests from within Atom",
   "activationEvents": [
-    "mocha-test-runner:run"
+    "mocha-test-runner:run",
+    "mocha-test-runner:run-previous"
   ],
   "repository": "https://github.com/TabDigital/atom-mocha-test-runner",
   "license": "MIT",
