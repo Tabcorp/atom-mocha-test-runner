@@ -8,6 +8,9 @@ currentContext = null
 
 module.exports =
 
+  configDefaults:
+    nodeBinaryPath: '/usr/local/bin/node'
+
   activate: (state) ->
     atom.workspaceView.on 'core:cancel', => @close()
     atom.workspaceView.on 'core:close', => @close()

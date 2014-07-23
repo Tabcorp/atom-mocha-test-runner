@@ -28,10 +28,9 @@ module.exports = class MochaWrapper extends events.EventEmitter
       cwd: @context.root
       env: process.env
 
-    opts.env["ATOM_SHELL_INTERNAL_RUN_AS_NODE"] = 1
-    node = (if process.platform is "darwin" then path.resolve(process.resourcesPath, "..", "Frameworks", "Atom Helper.app", "Contents", "MacOS", "Atom Helper") else process.execPath)
-
+    node  = atom.config.get 'mocha-test-runner.nodeBinaryPath'
     mocha = spawn node, flags, opts
+
     mocha.stdout.on 'data', (data) => @emit 'output', data.toString()
     mocha.stderr.on 'data', (data) => @emit 'output', data.toString()
 

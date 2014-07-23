@@ -10,3 +10,25 @@ Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
   - even if you switched to another tab
 
 ![Demo](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/demo.gif)
+
+### How does it work?
+
+This plugin looks for the closest `package.json` to the current file,
+and run the corresponding `mocha`. This should automatically pick up the right version,
+as well as your `mocha.opts` settings.
+
+To run the selected test, it uses `--grep` on the test name.
+In the case the name isn't unique enough, it might run a few other tests.
+In practice we found this is not an issue, and you still get fast TDD feedback loops.
+
+### Settings
+
+You need to set the path to the `node` binary in the settings panel.
+
+![Settings screenshot](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/settings.png)
+
+If the path is incorrect, you will get the following error:
+
+```
+execvp(): No such file or directory
+```
