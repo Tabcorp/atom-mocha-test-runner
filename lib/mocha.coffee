@@ -15,6 +15,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
     console.debug 'Selected test:', @grep or '<all>'
 
     flags = [
+      @context.mocha
       @context.test
       '--no-colors'
     ]
@@ -27,7 +28,10 @@ module.exports = class MochaWrapper extends events.EventEmitter
       cwd: @context.root
       env: process.env
 
-    mocha = spawn @context.mocha, flags, opts
+    opts.env["ATOM_SHELL_INTERNAL_RUN_AS_NODE"] = 1
+    node = (if process.platform is "darwin" then path.resolve(process.resourcesPath, "..", "Frameworks", "Atom Helper.app", "Contents", "MacOS", "Atom Helper") else process.execPath)
+
+    mocha = spawn node, flags, opts
     mocha.stdout.on 'data', (data) => @emit 'output', data.toString()
     mocha.stderr.on 'data', (data) => @emit 'output', data.toString()
 
