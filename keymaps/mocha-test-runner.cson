@@ -9,3 +9,4 @@
 # https://atom.io/docs/latest/advanced/keymaps
 '.workspace':
   'cmd-shift-m': 'mocha-test-runner:run'
+  'cmd-alt-shift-m': 'mocha-test-runner:run-previous'

@@ -1,16 +1,17 @@
-path = require 'path'
-createPane = require 'atom-pane'
-context = require './context'
-selectedTest = require './selected-test'
-MochaWrapper = require './mocha-wrapper'
-ResultView = require './result-view'
+path        = require 'path'
+createPane  = require 'atom-pane'
+context     = require './context'
+Mocha       = require './mocha'
+ResultView  = require './result-view'
 
 resultView = null
+currentContext = null
 
 module.exports =
 
   activate: (state) ->
     atom.workspaceView.command "mocha-test-runner:run", => @run()
+    atom.workspaceView.command "mocha-test-runner:run-previous", => @runPrevious()
     resultView = new ResultView(state)
 
   deactivate: ->
@@ -21,21 +22,28 @@ module.exports =
     resultView.serialize()
 
   run: ->
+    editor   = atom.workspaceView.getActivePaneItem()
+    currentContext = context.find editor
+    console.log 'context=', currentContext
+    @execute()
 
+  runPrevious: ->
+    throw new Error('No previous test run') unless currentContext
+    @execute()
+
+  execute: ->
     resultView.reset()
     if not resultView.hasParent()
       atom.workspaceView.prependToBottom resultView
 
     editor   = atom.workspaceView.getActivePaneItem()
-    ctx      = context.find editor.getPath()
-    testName = selectedTest.fromEditor editor
-    wrapper  = new MochaWrapper ctx, testName
+    mocha  = new Mocha currentContext
 
-    wrapper.on 'error',   (err) ->
+    mocha.on 'success', -> resultView.success()
+    mocha.on 'failure', -> resultView.failed()
+    mocha.on 'output', (text) -> resultView.addLine(text)
+    mocha.on 'error', (err) ->
       resultView.addLine('Failed to run the test: ' + err)
       resultView.failed()
-    wrapper.on 'output', (text) -> resultView.addLine(text)
-    wrapper.on 'success', -> resultView.success()
-    wrapper.on 'failure', -> resultView.failed()
 
-    wrapper.run()
+    mocha.run()

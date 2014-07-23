@@ -2,6 +2,7 @@
 'context-menu':
   '.overlayer':
       'Run Mocha tests': 'mocha-test-runner:run'
+      'Re-run last Mocha tests': 'mocha-test-runner:run-previous'
 
 'menu': [
   {
@@ -9,7 +10,8 @@
     'submenu': [
       'label': 'mocha-test-runner'
       'submenu': [
-        { 'label': 'Run', 'command': 'mocha-test-runner:run' }
+        { 'label': 'Run tests', 'command': 'mocha-test-runner:run' }
+        { 'label': 'Re-run last tests', 'command': 'mocha-test-runner:run-previous' }
       ]
     ]
   }

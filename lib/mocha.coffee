@@ -6,22 +6,22 @@ spawn  = require('child_process').spawn
 
 module.exports = class MochaWrapper extends events.EventEmitter
 
-  constructor: (@context, @testName) ->
+  constructor: (@context) ->
 
   run: ->
 
     console.debug 'Root folder:', @context.root
     console.debug 'Test file:', @context.test
-    console.debug 'Selected test:', @testName or '<all>'
+    console.debug 'Selected test:', @grep or '<all>'
 
     flags = [
       @context.test
       '--no-colors'
     ]
 
-    if @testName
+    if @context.grep
       flags.push '--grep'
-      flags.push @testName
+      flags.push @context.grep
 
     opts =
       cwd: @context.root
