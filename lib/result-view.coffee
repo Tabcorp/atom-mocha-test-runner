@@ -10,7 +10,7 @@ class ResultView extends View
         @div class: "panel-heading", =>
           @div class: 'pull-right', =>
             @span outlet: 'closeButton', class: 'close-icon'
-          @span 'Test results'
+          @span 'Mocha test results'
         @div class: 'panel-body', =>
           @pre outlet: 'results', class: 'results'
 
@@ -41,7 +41,6 @@ class ResultView extends View
     @results.empty()
 
   addLine: (line) ->
-    # line = line.replace(/^  /, '').replace(/^\n/, '')
     if line isnt '\n'
       @results.append line
 
