@@ -48,7 +48,7 @@ module.exports =
     mocha.on 'failure', -> resultView.failed()
     mocha.on 'output', (text) -> resultView.addLine(text)
     mocha.on 'error', (err) ->
-      resultView.addLine('Failed to run the test: ' + err)
+      resultView.addLine('Failed to run Mocha\n' + err.message)
       resultView.failed()
 
     mocha.run()

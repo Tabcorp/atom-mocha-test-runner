@@ -35,6 +35,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
     mocha.stdout.on 'data', (data) => @emit 'output', data.toString()
     mocha.stderr.on 'data', (data) => @emit 'output', data.toString()
 
+    mocha.on 'error', (err) => @emit 'error', err
     mocha.on 'exit', (code) =>
       if code is 0
         @emit 'success'
