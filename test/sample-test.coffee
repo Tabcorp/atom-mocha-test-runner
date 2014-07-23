@@ -1,3 +1,4 @@
+
 assert = require 'assert'
 
 describe 'Top level describe', ->
@@ -13,4 +14,4 @@ describe 'Top level describe', ->
   describe 'Other nested', ->
 
     it 'is also successful', ->
-      should.fail(true)
+      assert(true)

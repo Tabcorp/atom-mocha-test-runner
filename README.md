@@ -1,11 +1,11 @@
 # Atom : Mocha test runner
 
 Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
-It runs:
 
-- a single `it` or `describe` if the cursor is on that particular line
-- the test file that's currently open otherwise
+- `ctrl-alt-m` runs
+  - either the current test file
+  - or a single `it` / `describe` if the cursor is on that line
 
-It displays the results of the tests in a pane docked to the right.
+- `ctrl-alt-shift-m` re-runs the last test selection
 
-![A screenshot of your spankin' package](https://f.cloud.github.com/assets/69169/2290250/c35d867a-a017-11e3-86be-cd7c5bf3ff9b.gif)
+![Demo](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/demo.gif)
