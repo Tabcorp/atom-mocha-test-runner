@@ -10,16 +10,22 @@ currentContext = null
 module.exports =
 
   activate: (state) ->
+    atom.workspaceView.on 'core:cancel', => @close()
+    atom.workspaceView.on 'core:close', => @close()
     atom.workspaceView.command "mocha-test-runner:run", => @run()
     atom.workspaceView.command "mocha-test-runner:run-previous", => @runPrevious()
     resultView = new ResultView(state)
 
   deactivate: ->
+    atom.workspaceView.off 'core:cancel core:close'
     resultView.detach()
     resultView = null
 
   serialize: ->
     resultView.serialize()
+
+  close: ->
+    resultView.detach()
 
   run: ->
     editor   = atom.workspaceView.getActivePaneItem()
