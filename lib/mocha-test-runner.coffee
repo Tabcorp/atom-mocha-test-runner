@@ -1,5 +1,4 @@
 path        = require 'path'
-createPane  = require 'atom-pane'
 context     = require './context'
 Mocha       = require './mocha'
 ResultView  = require './result-view'
