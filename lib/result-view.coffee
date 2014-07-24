@@ -6,8 +6,8 @@ class ResultView extends View
   @content: ->
     @div class: 'mocha-test-runner', =>
       @div outlet: 'resizeHandle', class: 'resize-handle'
-      @div class: "panel", =>
-        @div class: "panel-heading", =>
+      @div class: 'panel', =>
+        @div outlet: 'heading', class: 'heading', =>
           @div class: 'pull-right', =>
             @span outlet: 'closeButton', class: 'close-icon'
           @span 'Mocha test results'
@@ -37,7 +37,7 @@ class ResultView extends View
     @height @resizeData.height + @resizeData.pageY - pageY
 
   reset: ->
-    @results.removeClass 'success failure'
+    @heading.removeClass 'alert-success alert-danger'
     @results.empty()
 
   addLine: (line) ->
@@ -45,7 +45,7 @@ class ResultView extends View
       @results.append line
 
   success: ->
-    @results.addClass 'success'
+    @heading.addClass 'alert-success'
 
-  failed: ->
-    @results.addClass 'failure'
+  failure: ->
+    @heading.addClass 'alert-danger'

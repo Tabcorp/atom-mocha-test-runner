@@ -49,10 +49,10 @@ module.exports =
     mocha  = new Mocha currentContext
 
     mocha.on 'success', -> resultView.success()
-    mocha.on 'failure', -> resultView.failed()
+    mocha.on 'failure', -> resultView.failure()
     mocha.on 'output', (text) -> resultView.addLine(text)
     mocha.on 'error', (err) ->
       resultView.addLine('Failed to run Mocha\n' + err.message)
-      resultView.failed()
+      resultView.failure()
 
     mocha.run()

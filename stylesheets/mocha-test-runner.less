@@ -23,13 +23,13 @@
     display: -webkit-flex;
     -webkit-flex-grow: 1;
     -webkit-flex-direction: column;
-    background-color: #fff;
+    background-color: #181818;
 
     margin: 0;
 
     .close-icon {
 
-      padding: 0.5em;
+      padding: @component-icon-padding;
 
       &:before {
         font-family: 'Octicons Regular';
@@ -44,8 +44,9 @@
 
     }
 
-    .panel-heading {
+    .heading {
       flex-shrink: 0;
+      padding: @component-padding;
     }
 
     .panel-body {
@@ -56,15 +57,9 @@
   }
 
   .results {
+    background-color: #181818;
+    color: #F8F8F8;
     font-size: @font-size;
-  }
-
-  .results.success {
-    color: rgb(0, 150, 0)
-  }
-
-  .results.failure {
-    color: rgb(150, 0, 0)
   }
 
 }
