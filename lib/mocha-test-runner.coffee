@@ -34,12 +34,13 @@ module.exports =
   run: ->
     editor   = atom.workspaceView.getActivePaneItem()
     currentContext = context.find editor
-    console.log 'context=', currentContext
     @execute()
 
   runPrevious: ->
-    throw new Error('No previous test run') unless currentContext
-    @execute()
+    if currentContext
+      @execute()
+    else
+      @displayError 'No previous test run'
 
   execute: ->
 
@@ -48,9 +49,12 @@ module.exports =
       atom.workspaceView.prependToBottom resultView
 
     if atom.config.get 'mocha-test-runner.showDebugInformation'
-      resultView.addLine "Root folder: #{currentContext.root}\n"
-      resultView.addLine "Test file: #{currentContext.test}\n"
-      resultView.addLine "Selected test: #{currentContext.grep or '<all>'}\n\n"
+      nodeBinary = atom.config.get 'mocha-test-runner.nodeBinaryPath'
+      resultView.addLine "Node binary:    #{nodeBinary}\n"
+      resultView.addLine "Root folder:    #{currentContext.root}\n"
+      resultView.addLine "Path to mocha:  #{currentContext.mocha}\n"
+      resultView.addLine "Test file:      #{currentContext.test}\n"
+      resultView.addLine "Selected test:  #{currentContext.grep}\n\n"
 
     editor = atom.workspaceView.getActivePaneItem()
     mocha  = new Mocha currentContext
@@ -63,3 +67,11 @@ module.exports =
       resultView.failure()
 
     mocha.run()
+
+
+  displayError: (message) ->
+    resultView.reset()
+    resultView.addLine message
+    resultView.failure()
+    if not resultView.hasParent()
+      atom.workspaceView.prependToBottom resultView
