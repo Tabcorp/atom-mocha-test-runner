@@ -25,5 +25,6 @@ In practice we found this is not an issue, and you still get fast TDD feedback l
 
 If you go to the settings pane, you can set the following values:
 
-- `Node binary path`: Path to the `node` executable (*defaults to `/usr/local/bin/node`*).
-- `Text only`: Remove any colors from the Mocha output (*defaults to `false`*)
+- `Node binary path`: path to the `node` executable (*defaults to `/usr/local/bin/node`*).
+- `Text only`: remove any colors from the Mocha output (*defaults to `false`*)
+- `Show debug information`: display extra information for troubleshooting (*defaults to `false`*)
