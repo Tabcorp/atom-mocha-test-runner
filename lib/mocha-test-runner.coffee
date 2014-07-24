@@ -11,6 +11,7 @@ module.exports =
   configDefaults:
     nodeBinaryPath: '/usr/local/bin/node'
     textOnlyOutput: false
+    showDebugInformation: false
 
   activate: (state) ->
     atom.workspaceView.on 'core:cancel', => @close()
@@ -41,9 +42,15 @@ module.exports =
     @execute()
 
   execute: ->
+
     resultView.reset()
     if not resultView.hasParent()
       atom.workspaceView.prependToBottom resultView
+
+    if atom.config.get 'mocha-test-runner.showDebugInformation'
+      resultView.addLine "Root folder: #{currentContext.root}\n"
+      resultView.addLine "Test file: #{currentContext.test}\n"
+      resultView.addLine "Selected test: #{currentContext.grep or '<all>'}\n\n"
 
     editor = atom.workspaceView.getActivePaneItem()
     mocha  = new Mocha currentContext

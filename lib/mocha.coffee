@@ -13,10 +13,6 @@ module.exports = class MochaWrapper extends events.EventEmitter
 
   run: ->
 
-    console.debug 'Root folder:', @context.root
-    console.debug 'Test file:', @context.test
-    console.debug 'Selected test:', @grep or '<all>'
-
     flags = [
       @context.mocha
       @context.test
