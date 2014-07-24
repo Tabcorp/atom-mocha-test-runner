@@ -14,7 +14,6 @@ module.exports = class MochaWrapper extends events.EventEmitter
   run: ->
 
     flags = [
-      @context.mocha
       @context.test
     ]
 
@@ -27,9 +26,9 @@ module.exports = class MochaWrapper extends events.EventEmitter
 
     opts =
       cwd: @context.root
-      env: process.env
+      env: { PATH: path.dirname(@node) }
 
-    mocha = spawn @node, flags, opts
+    mocha = spawn @context.mocha, flags, opts
 
     if @textOnly
       mocha.stdout.on 'data', (data) => @emit 'output', data.toString()
