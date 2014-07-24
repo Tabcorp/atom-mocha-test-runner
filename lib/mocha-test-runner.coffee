@@ -10,6 +10,7 @@ module.exports =
 
   configDefaults:
     nodeBinaryPath: '/usr/local/bin/node'
+    textOnlyOutput: false
 
   activate: (state) ->
     atom.workspaceView.on 'core:cancel', => @close()
@@ -44,7 +45,7 @@ module.exports =
     if not resultView.hasParent()
       atom.workspaceView.prependToBottom resultView
 
-    editor   = atom.workspaceView.getActivePaneItem()
+    editor = atom.workspaceView.getActivePaneItem()
     mocha  = new Mocha currentContext
 
     mocha.on 'success', -> resultView.success()

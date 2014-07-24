@@ -23,12 +23,7 @@ In practice we found this is not an issue, and you still get fast TDD feedback l
 
 ### Settings
 
-You need to set the path to the `node` binary in the settings panel.
+If you go to the settings pane, you can set the following values:
 
-![Settings screenshot](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/settings.png)
-
-If the path is incorrect, you will get the following error:
-
-```
-execvp(): No such file or directory
-```
+- `Node binary path`: Path to the `node` executable (*defaults to `/usr/local/bin/node`*).
+- `Text only`: Remove any colors from the Mocha output (*defaults to `false`*)
