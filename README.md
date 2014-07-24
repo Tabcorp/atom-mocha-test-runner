@@ -2,8 +2,8 @@
 
 Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
-- `ctrl-alt-m` runs
-  - either the current test file
+- `ctrl-alt-m` runs either
+  - the current test file
   - or a single `it` / `describe` if the cursor is on that line
 
 - `ctrl-alt-shift-m` re-runs the last test selection
@@ -11,11 +11,16 @@ Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
 ![Demo](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/demo.gif)
 
-### How does it work?
+### Running mocha
 
 This plugin looks for the closest `package.json` to the current file,
 and run the corresponding `mocha`. This should automatically pick up the right version,
 as well as your `mocha.opts` settings.
+
+If you don't have a `package.json` file, or if Mocha isn't installed locally,
+it will try to execute the global `mocha` command instead.
+
+### How does it work?
 
 To run the selected test, it uses `--grep` on the test name.
 In the case the name isn't unique enough, it might run a few other tests.
