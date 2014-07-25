@@ -17,6 +17,8 @@
     "coffee-script": "~1.7.1"
   },
   "dependencies": {
-    "ansi-html-stream": "0.0.3"
+    "ansi-html-stream": "0.0.3",
+    "jsesc": "~0.4.3",
+    "localeval": "~13.12.11"
   }
 }

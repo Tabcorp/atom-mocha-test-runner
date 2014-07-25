@@ -1,4 +1,5 @@
-path = require 'path'
+path      = require 'path'
+localeval = require 'localeval'
 
 exports.fromEditor = (editor) ->
   row = editor.getCursorScreenRow()
@@ -7,13 +8,13 @@ exports.fromEditor = (editor) ->
   return test
 
 getTestName = (line) ->
-  describe = extractMatch line, /describe\s*\(?\s*[\'\"](.*)[\'\"]/
-  it       = extractMatch line,       /it\s*\(?\s*[\'\"](.*)[\'\"]/
+  describe = extractMatch line, /describe\s*\(?\s*['"](.*)['"]/
+  it       = extractMatch line,       /it\s*\(?\s*['"](.*)['"]/
   describe or it or null
 
 extractMatch = (line, regex) ->
   matches = regex.exec line
   if matches and matches.length >= 2
-    matches[1]
+    localeval "'#{matches[1]}'"
   else
     null

@@ -2,6 +2,7 @@ fs     = require 'fs'
 path   = require 'path'
 util   = require 'util'
 events = require 'events'
+escape = require 'jsesc'
 ansi   = require 'ansi-html-stream'
 spawn  = require('child_process').spawn
 
@@ -22,7 +23,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
 
     if @context.grep
       flags.push '--grep'
-      flags.push @context.grep
+      flags.push escape(@context.grep, escapeEverything: true)
 
     opts =
       cwd: @context.root

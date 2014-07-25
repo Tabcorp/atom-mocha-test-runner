@@ -15,3 +15,6 @@ describe 'Top level describe', ->
 
     it 'is also successful', ->
       assert(true)
+
+    it 'is successful\t\nwith\' []()"&%', ->
+      assert(true)
