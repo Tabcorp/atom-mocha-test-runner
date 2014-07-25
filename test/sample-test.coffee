@@ -16,8 +16,5 @@ describe 'Top level describe', ->
     it 'is also successful', ->
       assert(true)
 
-    it 'is successful with [square brackets]', ->
-      assert(true)
-
-    it 'is successful with (parentheses)', ->
+    it 'is successful\t\nwith\' []()"&%', ->
       assert(true)
