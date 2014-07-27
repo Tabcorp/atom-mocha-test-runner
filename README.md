@@ -1,5 +1,7 @@
 # Atom : Mocha test runner
 
+[![License](http://img.shields.io/badge/license-MIT-yellow.svg?style=flat)](https://github.com/TabDigital/atom-mocha-test-runner/blob/master/LICENSE.md)
+
 Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
 - `ctrl-alt-m` runs either
