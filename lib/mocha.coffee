@@ -27,7 +27,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
       flags.push escape(@context.grep, escapeEverything: true)
 
     if @options
-      flags.push @options
+      Array::push.apply flags, @options.split ' '
 
     opts =
       cwd: @context.root
