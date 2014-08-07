@@ -11,6 +11,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
   constructor: (@context) ->
     @node = atom.config.get 'mocha-test-runner.nodeBinaryPath'
     @textOnly = atom.config.get 'mocha-test-runner.textOnlyOutput'
+    @options = atom.config.get 'mocha-test-runner.options'
 
   run: ->
 
@@ -24,6 +25,9 @@ module.exports = class MochaWrapper extends events.EventEmitter
     if @context.grep
       flags.push '--grep'
       flags.push escape(@context.grep, escapeEverything: true)
+
+    if @options
+      flags.push @options
 
     opts =
       cwd: @context.root

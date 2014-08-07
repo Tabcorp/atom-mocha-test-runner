@@ -12,6 +12,7 @@ module.exports =
     nodeBinaryPath: '/usr/local/bin/node'
     textOnlyOutput: false
     showDebugInformation: false
+    options: ''
 
   activate: (state) ->
     atom.workspaceView.on 'core:cancel', => @close()
