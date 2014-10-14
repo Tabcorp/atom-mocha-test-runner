@@ -3,6 +3,7 @@ context     = require './context'
 Mocha       = require './mocha'
 ResultView  = require './result-view'
 
+mocha = null
 resultView = null
 currentContext = null
 
@@ -15,13 +16,15 @@ module.exports =
     options: ''
 
   activate: (state) ->
+    resultView = new ResultView(state)
+    resultView.on 'result-view:close', => @close()
     atom.workspaceView.on 'core:cancel', => @close()
     atom.workspaceView.on 'core:close', => @close()
     atom.workspaceView.command "mocha-test-runner:run", => @run()
     atom.workspaceView.command "mocha-test-runner:run-previous", => @runPrevious()
-    resultView = new ResultView(state)
 
   deactivate: ->
+    if mocha then mocha.stop()
     atom.workspaceView.off 'core:cancel core:close'
     resultView.detach()
     resultView = null
@@ -30,6 +33,7 @@ module.exports =
     resultView.serialize()
 
   close: ->
+    if mocha then mocha.stop()
     resultView.detach()
 
   run: ->
