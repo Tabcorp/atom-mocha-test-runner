@@ -16,7 +16,7 @@ class ResultView extends View
 
   initialize: (state) ->
     @height state?.height
-    @closeButton.on 'click', => @detach()
+    @closeButton.on 'click', => @trigger 'result-view:close'
     @resizeHandle.on 'mousedown', (e) => @resizeStarted e
 
   serialize: ->
