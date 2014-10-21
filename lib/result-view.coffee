@@ -18,6 +18,8 @@ class ResultView extends View
     @height state?.height
     @closeButton.on 'click', => @trigger 'result-view:close'
     @resizeHandle.on 'mousedown', (e) => @resizeStarted e
+    @results.addClass 'native-key-bindings'
+    @results.attr 'tabindex', -1
 
   serialize: ->
     height: @height()
