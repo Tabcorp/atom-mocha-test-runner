@@ -1,7 +1,7 @@
 {
   "name": "mocha-test-runner",
   "main": "./lib/mocha-test-runner",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Run Mocha tests from within Atom",
   "activationEvents": [
     "mocha-test-runner:run",
