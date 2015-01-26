@@ -2,8 +2,8 @@ path      = require 'path'
 localeval = require 'localeval'
 
 exports.fromEditor = (editor) ->
-  row = editor.getCursorScreenRow()
-  line = editor.lineForBufferRow row
+  row = editor.getCursorScreenPosition().row
+  line = editor.lineTextForBufferRow row
   test = getTestName line
   return test
 

@@ -39,5 +39,5 @@ If you go to the settings pane, you can set the following values:
 - `Node binary path`: path to the `node` executable (*defaults to `/usr/local/bin/node`*).
 - `Text only`: remove any colors from the Mocha output (*defaults to `false`*)
 - `Show context information`: display extra information for troubleshooting (*defaults to `false`*)
-- `Options`: append given options to Mocha binary  (*optional*)
-- `Debug Options`: append given options to Mocha binary when "debugging" a test
+- `Options`: append given options always to Mocha binary  (*optional*)
+- `Options for Debug`: append given options to Mocha binary to enable debugging

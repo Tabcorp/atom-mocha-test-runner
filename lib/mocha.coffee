@@ -16,8 +16,8 @@ module.exports = class MochaWrapper extends events.EventEmitter
     @options = atom.config.get 'mocha-test-runner.options'
 
     if debugMode
-      debugOptions = atom.config.get 'mocha-test-runner.debugOptions'
-      @options = "#{@options} #{debugOptions}"
+      optionsForDebug = atom.config.get 'mocha-test-runner.optionsForDebug'
+      @options = "#{@options} #{optionsForDebug}"
 
   stop: ->
     if @mocha?

@@ -7,7 +7,7 @@
 
 # For more detailed documentation see
 # https://atom.io/docs/latest/advanced/keymaps
-'.workspace':
+'atom-workspace':
   'ctrl-alt-m': 'mocha-test-runner:run'
   'ctrl-alt-d': 'mocha-test-runner:debug'
   'ctrl-alt-shift-m': 'mocha-test-runner:run-previous'
