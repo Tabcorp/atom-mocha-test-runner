@@ -1,11 +1,13 @@
 {
   "name": "mocha-test-runner",
   "main": "./lib/mocha-test-runner",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Run Mocha tests from within Atom",
   "activationEvents": [
     "mocha-test-runner:run",
-    "mocha-test-runner:run-previous"
+    "mocha-test-runner:debug",
+    "mocha-test-runner:run-previous",
+    "mocha-test-runner:debug-previous"
   ],
   "repository": "https://github.com/TabDigital/atom-mocha-test-runner",
   "license": "MIT",

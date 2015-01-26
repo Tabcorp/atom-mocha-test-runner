@@ -5,11 +5,15 @@
 Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
 - `ctrl-alt-m` runs either
-  - the current test file
-  - or a single `it` / `describe` if the cursor is on that line
+- the current test file
+- or a single `it` / `describe` if the cursor is on that line
+
+- `ctrl-alt-d` runs mocha as before, but with `Debug Options`added
 
 - `ctrl-alt-shift-m` re-runs the last test selection
-  - even if you switched to another tab
+- even if you switched to another tab
+
+- `ctrl-alt-shift-d` re-runs mocha as before, but with `Debug Options`added
 
 ![Demo](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/demo.gif)
 
@@ -34,5 +38,6 @@ If you go to the settings pane, you can set the following values:
 
 - `Node binary path`: path to the `node` executable (*defaults to `/usr/local/bin/node`*).
 - `Text only`: remove any colors from the Mocha output (*defaults to `false`*)
-- `Show debug information`: display extra information for troubleshooting (*defaults to `false`*)
+- `Show context information`: display extra information for troubleshooting (*defaults to `false`*)
 - `Options`: append given options to Mocha binary  (*optional*)
+- `Debug Options`: append given options to Mocha binary when "debugging" a test
