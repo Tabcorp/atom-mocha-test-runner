@@ -1,14 +1,20 @@
 {
   "name": "mocha-test-runner",
   "main": "./lib/mocha-test-runner",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "Run Mocha tests from within Atom",
-  "activationEvents": [
-    "mocha-test-runner:run",
-    "mocha-test-runner:run-previous"
-  ],
   "repository": "https://github.com/TabDigital/atom-mocha-test-runner",
   "license": "MIT",
+  "activationCommands": {
+    "atom-workspace": [
+      "mocha-test-runner:run",
+      "mocha-test-runner:debug",
+      "mocha-test-runner:run-previous",
+      "mocha-test-runner:debug-previous"
+    ],
+    ".platform-darwin":["settings-view:open"],
+    ".platform-win32":["settings-view:open"]
+  },
   "engines": {
     "atom": ">0.50.0"
   },
@@ -20,6 +26,7 @@
     "ansi-html-stream": "0.0.3",
     "jsesc": "~0.4.3",
     "localeval": "~13.12.11",
-    "ps-tree": "0.0.3"
+    "ps-tree": "0.0.3",
+    "atom-space-pen-views": "^2.0.3"
   }
 }

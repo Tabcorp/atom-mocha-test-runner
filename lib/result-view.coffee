@@ -1,4 +1,4 @@
-{$, $$$, View} = require 'atom'
+{$, $$$, View} = require 'atom-space-pen-views'
 
 module.exports =
 class ResultView extends View
@@ -16,7 +16,7 @@ class ResultView extends View
 
   initialize: (state) ->
     @height state?.height
-    @closeButton.on 'click', => @trigger 'result-view:close'
+    @closeButton.on 'click', => atom.commands.dispatch this, 'result-view:close'
     @resizeHandle.on 'mousedown', (e) => @resizeStarted e
     @results.addClass 'native-key-bindings'
     @results.attr 'tabindex', -1
