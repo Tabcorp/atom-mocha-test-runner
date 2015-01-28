@@ -3,29 +3,55 @@ context     = require './context'
 Mocha       = require './mocha'
 ResultView  = require './result-view'
 
+{CompositeDisposable} = require 'atom'
+
 mocha = null
 resultView = null
 currentContext = null
 
 module.exports =
+  config: # They are only read upon activation (atom bug?), thus the activationCommands for "settings-view:open" in package.json
+    nodeBinaryPath:
+      type: 'string'
+      default: '/usr/local/bin/node'
+      description: 'Path to the node executable'
+    textOnlyOutput:
+      type: 'boolean'
+      default: false
+      description: 'Remove any colors from the Mocha output'
+    showContextInformation:
+      type: 'boolean'
+      default: false
+      description: 'Display extra information for troubleshooting'
+    options:
+      type: 'string'
+      default: ''
+      description: 'Append given options always to Mocha binary'
+    optionsForDebug:
+      type: 'string'
+      default: '--debug --debug-brk'
+      description: 'Append given options to Mocha binary to enable debugging'
 
-  configDefaults:
-    nodeBinaryPath: '/usr/local/bin/node'
-    textOnlyOutput: false
-    showDebugInformation: false
-    options: ''
 
   activate: (state) ->
+    # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
+    @subscriptions = new CompositeDisposable
+
     resultView = new ResultView(state)
-    resultView.on 'result-view:close', => @close()
-    atom.workspaceView.on 'core:cancel', => @close()
-    atom.workspaceView.on 'core:close', => @close()
-    atom.workspaceView.command "mocha-test-runner:run", => @run()
-    atom.workspaceView.command "mocha-test-runner:run-previous", => @runPrevious()
+
+    @subscriptions.add atom.commands.add resultView, 'result-view:close', => @close()
+
+    @subscriptions.add atom.commands.add 'atom-workspace', 'core:cancel', => @close()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'core:close', => @close()
+
+    @subscriptions.add atom.commands.add 'atom-workspace', 'mocha-test-runner:run': => @run()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'mocha-test-runner:debug': => @run(true)
+    @subscriptions.add atom.commands.add 'atom-workspace', 'mocha-test-runner:run-previous', => @runPrevious()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'mocha-test-runner:debug-previous', => @runPrevious(true)
 
   deactivate: ->
     if mocha then mocha.stop()
-    atom.workspaceView.off 'core:cancel core:close'
+    @subscriptions.dispose()
     resultView.detach()
     resultView = null
 
@@ -36,33 +62,34 @@ module.exports =
     if mocha then mocha.stop()
     resultView.detach()
 
-  run: ->
-    editor   = atom.workspaceView.getActivePaneItem()
+  run: (inDebugMode = false) ->
+    editor   = atom.workspace.getActivePaneItem()
     currentContext = context.find editor
-    @execute()
+    @execute(inDebugMode)
 
-  runPrevious: ->
+  runPrevious: (inDebugMode = false) ->
     if currentContext
-      @execute()
+      @execute(inDebugMode)
     else
       @displayError 'No previous test run'
 
-  execute: ->
+  execute: (inDebugMode = false) ->
 
     resultView.reset()
     if not resultView.hasParent()
-      atom.workspaceView.prependToBottom resultView
+      atom.workspace.addBottomPanel item:resultView
 
-    if atom.config.get 'mocha-test-runner.showDebugInformation'
+    if atom.config.get 'mocha-test-runner.showContextInformation'
       nodeBinary = atom.config.get 'mocha-test-runner.nodeBinaryPath'
       resultView.addLine "Node binary:    #{nodeBinary}\n"
       resultView.addLine "Root folder:    #{currentContext.root}\n"
       resultView.addLine "Path to mocha:  #{currentContext.mocha}\n"
+      resultView.addLine "Debug-Mode:     #{inDebugMode}\n"
       resultView.addLine "Test file:      #{currentContext.test}\n"
       resultView.addLine "Selected test:  #{currentContext.grep}\n\n"
 
-    editor = atom.workspaceView.getActivePaneItem()
-    mocha  = new Mocha currentContext
+    editor = atom.workspace.getActivePaneItem()
+    mocha  = new Mocha currentContext, inDebugMode
 
     mocha.on 'success', -> resultView.success()
     mocha.on 'failure', -> resultView.failure()
@@ -79,4 +106,4 @@ module.exports =
     resultView.addLine message
     resultView.failure()
     if not resultView.hasParent()
-      atom.workspaceView.prependToBottom resultView
+      atom.workspace.addBottomPanel item:resultView

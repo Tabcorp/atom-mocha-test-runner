@@ -9,11 +9,15 @@ spawn  = require('child_process').spawn
 
 module.exports = class MochaWrapper extends events.EventEmitter
 
-  constructor: (@context) ->
+  constructor: (@context, debugMode = false) ->
     @mocha = null
     @node = atom.config.get 'mocha-test-runner.nodeBinaryPath'
     @textOnly = atom.config.get 'mocha-test-runner.textOnlyOutput'
     @options = atom.config.get 'mocha-test-runner.options'
+
+    if debugMode
+      optionsForDebug = atom.config.get 'mocha-test-runner.optionsForDebug'
+      @options = "#{@options} #{optionsForDebug}"
 
   stop: ->
     if @mocha?
