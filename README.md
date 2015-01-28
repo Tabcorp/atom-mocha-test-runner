@@ -10,8 +10,7 @@ Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
 - `ctrl-alt-d` runs mocha as before, but with `Debug Options`added
 
-- `ctrl-alt-shift-m` re-runs the last test selection
-- even if you switched to another tab
+- `ctrl-alt-shift-m` re-runs the last test selection - even if you switched to another tab
 
 - `ctrl-alt-shift-d` re-runs mocha as before, but with `Debug Options`added
 
