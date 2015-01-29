@@ -18,7 +18,11 @@ class ResultView extends View
           @pre outlet: 'results', class: 'results'
 
   initialize: (state) ->
-    @height state?.height
+    height = state?.height
+    @openHeight = Math.max(140,state?.openHeight,height)
+    @height height
+
+    @heading.on 'dblclick', => @toggleCollapse()
     @closeButton.on 'click', => atom.commands.dispatch this, 'result-view:close'
     @resizeHandle.on 'mousedown', (e) => @resizeStarted e
     @results.addClass 'native-key-bindings'
@@ -26,20 +30,25 @@ class ResultView extends View
 
   serialize: ->
     height: @height()
+    openHeight: @openHeight
 
   resizeStarted: ({pageY}) ->
     @resizeData =
       pageY: pageY
       height: @height()
     $(document.body).on 'mousemove', @resizeView
-    $(document.body).on 'mouseup', @resizeStopped
+    $(document.body).one 'mouseup', @resizeStopped.bind(this)
 
   resizeStopped: ->
     $(document.body).off 'mousemove', @resizeView
-    $(document.body).off 'mouseup', @resizeStopped
+
+    currentHeight = @height()
+    if currentHeight > @heading.outerHeight()
+      @openHeight = currentHeight
 
   resizeView: ({pageY}) =>
-    @height @resizeData.height + @resizeData.pageY - pageY
+    headingHeight =  @heading.outerHeight()
+    @height Math.max(@resizeData.height + @resizeData.pageY - pageY,headingHeight)
 
   reset: ->
     @heading.removeClass 'alert-success alert-danger'
@@ -63,3 +72,15 @@ class ResultView extends View
   updateSummary: (stats) ->
     return unless stats?.length
     @headingText.html "#{DEFAULT_HEADING_TEXT}: #{stats.join(', ')}"
+
+  toggleCollapse: ->
+    headingHeight = @heading.outerHeight()
+    viewHeight = @height()
+
+    return unless headingHeight > 0
+
+    if viewHeight > headingHeight
+      @openHeight = viewHeight
+      @height(headingHeight)
+    else
+      @height @openHeight
