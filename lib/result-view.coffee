@@ -1,6 +1,8 @@
 {$, $$$, View} = require 'atom-space-pen-views'
 clickablePaths = require './clickable-paths'
 
+DEFAULT_HEADING_TEXT = 'Mocha test results'
+
 module.exports =
 class ResultView extends View
 
@@ -11,7 +13,7 @@ class ResultView extends View
         @div outlet: 'heading', class: 'heading', =>
           @div class: 'pull-right', =>
             @span outlet: 'closeButton', class: 'close-icon'
-          @span 'Mocha test results'
+          @span outlet: 'headingText', DEFAULT_HEADING_TEXT
         @div class: 'panel-body', =>
           @pre outlet: 'results', class: 'results'
 
@@ -41,6 +43,8 @@ class ResultView extends View
 
   reset: ->
     @heading.removeClass 'alert-success alert-danger'
+    @heading.addClass 'alert-info'
+    @headingText.html "#{DEFAULT_HEADING_TEXT}..."
     @results.empty()
 
   addLine: (line) ->
@@ -48,8 +52,14 @@ class ResultView extends View
       @results.append line
       clickablePaths.attachClickHandler()
 
-  success: ->
+  success: (stats) ->
+    @heading.removeClass 'alert-info'
     @heading.addClass 'alert-success'
 
-  failure: ->
+  failure: (stats) ->
+    @heading.removeClass 'alert-info'
     @heading.addClass 'alert-danger'
+
+  updateSummary: (stats) ->
+    return unless stats?.length
+    @headingText.html "#{DEFAULT_HEADING_TEXT}: #{stats.join(', ')}"

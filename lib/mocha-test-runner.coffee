@@ -93,6 +93,7 @@ module.exports =
 
     mocha.on 'success', -> resultView.success()
     mocha.on 'failure', -> resultView.failure()
+    mocha.on 'updateSummary', (stats) -> resultView.updateSummary(stats)
     mocha.on 'output', (text) -> resultView.addLine(text)
     mocha.on 'error', (err) ->
       resultView.addLine('Failed to run Mocha\n' + err.message)

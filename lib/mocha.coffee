@@ -9,6 +9,8 @@ spawn  = require('child_process').spawn
 
 clickablePaths = require './clickable-paths'
 
+STATS_MATCHER = /\d+\s+(?:failing|passing|pending)/g
+
 module.exports = class MochaWrapper extends events.EventEmitter
 
   constructor: (@context, debugMode = false) ->
@@ -20,6 +22,8 @@ module.exports = class MochaWrapper extends events.EventEmitter
     if debugMode
       optionsForDebug = atom.config.get 'mocha-test-runner.optionsForDebug'
       @options = "#{@options} #{optionsForDebug}"
+
+    @resetStatistics()
 
   stop: ->
     if @mocha?
@@ -46,6 +50,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
       cwd: @context.root
       env: { PATH: path.dirname(@node) }
 
+    @resetStatistics()
     @mocha = spawn @context.mocha, flags, opts
 
     if @textOnly
@@ -55,16 +60,27 @@ module.exports = class MochaWrapper extends events.EventEmitter
       stream = ansi(chunked: false)
       @mocha.stdout.pipe stream
       @mocha.stderr.pipe stream
-      stream.on 'data', (data) => @emit 'output', clickablePaths.link data.toString()
+      stream.on 'data', (data) =>
+        @parseStatistics data
+        @emit 'output', clickablePaths.link data.toString()
 
     @mocha.on 'error', (err) =>
       @emit 'error', err
 
     @mocha.on 'exit', (code) =>
       if code is 0
-        @emit 'success'
+        @emit 'success', @stats
       else
-        @emit 'failure'
+        @emit 'failure', @stats
+
+  resetStatistics: ->
+    @stats = []
+
+  parseStatistics: (data) ->
+    while matches = STATS_MATCHER.exec(data)
+      stat = matches[0]
+      @stats.push(stat)
+      @emit 'updateSummary', @stats
 
 
 killTree = (pid, signal, callback) ->
