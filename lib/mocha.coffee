@@ -7,6 +7,8 @@ ansi   = require 'ansi-html-stream'
 psTree = require 'ps-tree'
 spawn  = require('child_process').spawn
 
+clickablePaths = require './clickable-paths'
+
 module.exports = class MochaWrapper extends events.EventEmitter
 
   constructor: (@context, debugMode = false) ->
@@ -53,7 +55,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
       stream = ansi(chunked: false)
       @mocha.stdout.pipe stream
       @mocha.stderr.pipe stream
-      stream.on 'data', (data) => @emit 'output', data.toString()
+      stream.on 'data', (data) => @emit 'output', clickablePaths.link data.toString()
 
     @mocha.on 'error', (err) =>
       @emit 'error', err
