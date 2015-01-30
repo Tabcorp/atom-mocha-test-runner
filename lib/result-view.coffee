@@ -1,4 +1,5 @@
 {$, $$$, View} = require 'atom-space-pen-views'
+clickablePaths = require './clickable-paths'
 
 module.exports =
 class ResultView extends View
@@ -45,6 +46,7 @@ class ResultView extends View
   addLine: (line) ->
     if line isnt '\n'
       @results.append line
+      clickablePaths.attachClickHandler()
 
   success: ->
     @heading.addClass 'alert-success'
