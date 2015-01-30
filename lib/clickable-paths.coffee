@@ -38,14 +38,15 @@ module.exports.open = (extendedPath) ->
 
   atom.workspace.open(filename)
   .then ->
-
     return unless row?
-    col ?= 0
+
+    # align coordinates 0-index-based
+    row = Math.max(row - 1, 0)
+    col = Math.max(~~col - 1, 0)
+    position = new Point(row, col)
 
     editor = atom.workspace.getActiveTextEditor()
     return unless editor?
-
-    position = new Point(row, col)
 
     editor.scrollToBufferPosition(position, center:true)
     editor.setCursorBufferPosition(position)
