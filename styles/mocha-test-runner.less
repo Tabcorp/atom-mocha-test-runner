@@ -8,7 +8,7 @@
 
   display: -webkit-flex;
   -webkit-flex-direction: column;
-  min-height: 140px;
+  min-height: @font-size + 2 * @component-padding;
 
   .resize-handle {
     position: absolute;
@@ -47,6 +47,7 @@
     .heading {
       flex-shrink: 0;
       padding: @component-padding;
+      color: black;
     }
 
     .panel-body {
