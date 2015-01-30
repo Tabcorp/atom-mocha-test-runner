@@ -7,13 +7,14 @@ PATH_REGEX = /((?:\w:)?[^:\s\(\)]+):(\d+):(\d+)/g
 
 module.exports.link = (line) ->
   return null unless line?
-  line.replace(PATH_REGEX,'<a class="flink newFLink">$&</a>')
+  line.replace(PATH_REGEX,'<a class="flink">$&</a>')
 
 
 module.exports.attachClickHandler = ->
-  $('.newFLink').on 'click', module.exports.clicked
-  .removeClass('.newFLink') # remove "new" marker
+  $(document).on 'click', '.flink', module.exports.clicked
 
+module.exports.removeClickHandler = ->
+  $(document).off 'click', '.flink', module.exports.clicked
 
 module.exports.clicked = ->
   extendedPath = this.innerHTML
