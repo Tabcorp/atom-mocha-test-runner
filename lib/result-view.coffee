@@ -28,9 +28,14 @@ class ResultView extends View
     @results.addClass 'native-key-bindings'
     @results.attr 'tabindex', -1
 
+    clickablePaths.attachClickHandler()
+
   serialize: ->
     height: @height()
     openHeight: @openHeight
+
+  destroy: ->
+    clickablePaths.removeClickHandler()
 
   resizeStarted: ({pageY}) ->
     @resizeData =
@@ -59,7 +64,6 @@ class ResultView extends View
   addLine: (line) ->
     if line isnt '\n'
       @results.append line
-      clickablePaths.attachClickHandler()
 
   success: (stats) ->
     @heading.removeClass 'alert-info'
