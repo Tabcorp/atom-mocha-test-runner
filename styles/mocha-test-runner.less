@@ -10,14 +10,6 @@
   -webkit-flex-direction: column;
   min-height: @font-size + 2 * @component-padding;
 
-  .resize-handle {
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 10px;
-    cursor: row-resize;
-  }
-
   .panel {
 
     display: -webkit-flex;
@@ -30,6 +22,7 @@
     .close-icon {
 
       padding: @component-icon-padding;
+      cursor: initial;
 
       &:before {
         font-family: 'Octicons Regular';
@@ -48,6 +41,7 @@
       flex-shrink: 0;
       padding: @component-padding;
       color: black;
+      cursor: row-resize;
     }
 
     .panel-body {
