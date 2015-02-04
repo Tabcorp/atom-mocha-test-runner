@@ -8,7 +8,6 @@ class ResultView extends View
 
   @content: ->
     @div class: 'mocha-test-runner', =>
-      @div outlet: 'resizeHandle', class: 'resize-handle'
       @div class: 'panel', =>
         @div outlet: 'heading', class: 'heading', =>
           @div class: 'pull-right', =>
@@ -24,7 +23,7 @@ class ResultView extends View
 
     @heading.on 'dblclick', => @toggleCollapse()
     @closeButton.on 'click', => atom.commands.dispatch this, 'result-view:close'
-    @resizeHandle.on 'mousedown', (e) => @resizeStarted e
+    @heading.on 'mousedown', (e) => @resizeStarted e
     @results.addClass 'native-key-bindings'
     @results.attr 'tabindex', -1
 
