@@ -50,9 +50,8 @@ module.exports =
     @subscriptions.add atom.commands.add 'atom-workspace', 'mocha-test-runner:debug-previous', => @runPrevious(true)
 
   deactivate: ->
-    if mocha then mocha.stop()
+    @close()
     @subscriptions.dispose()
-    resultView.detach()
     resultView = null
 
   serialize: ->
@@ -61,6 +60,7 @@ module.exports =
   close: ->
     if mocha then mocha.stop()
     resultView.detach()
+    @resultViewPanel?.destroy()
 
   run: (inDebugMode = false) ->
     editor   = atom.workspace.getActivePaneItem()
@@ -77,7 +77,7 @@ module.exports =
 
     resultView.reset()
     if not resultView.hasParent()
-      atom.workspace.addBottomPanel item:resultView
+      @resultViewPanel = atom.workspace.addBottomPanel item:resultView
 
     if atom.config.get 'mocha-test-runner.showContextInformation'
       nodeBinary = atom.config.get 'mocha-test-runner.nodeBinaryPath'
