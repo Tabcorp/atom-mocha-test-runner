@@ -4,20 +4,20 @@
 
 Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
-- `ctrl-alt-m` runs either
+- `ctrl-alt-m` runs either:
   - the current test file
   - or a single `it` / `describe` if the cursor is on that line
 
-- `ctrl-alt-d` runs mocha as before, but with `Debug Options`added
+- `ctrl-alt-d` runs mocha as before, but with `Debug Options` added
 
-- `ctrl-alt-shift-m` re-runs the last test selection 
+- `ctrl-alt-shift-m` re-runs the last test selection
   - even if you switched to another tab
 
-- `ctrl-alt-shift-d` re-runs mocha as before, but with `Debug Options`added
+- `ctrl-alt-shift-d` re-runs mocha as before, but with `Debug Options` added
 
 ![Demo](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/demo.gif)
 
-### Running mocha
+### Running Mocha
 
 This plugin looks for the closest `package.json` to the current file,
 and run the corresponding `mocha`. This should automatically pick up the right version,
@@ -37,7 +37,8 @@ In practice we found this is not an issue, and you still get fast TDD feedback l
 If you go to the settings pane, you can set the following values:
 
 - `Node binary path`: path to the `node` executable (*defaults to `/usr/local/bin/node`*).
-- `Text only`: remove any colors from the Mocha output (*defaults to `false`*)
-- `Show context information`: display extra information for troubleshooting (*defaults to `false`*)
-- `Options`: append given options always to Mocha binary  (*optional*)
-- `Options for Debug`: append given options to Mocha binary to enable debugging
+- `Text only`: remove any colors from the Mocha output (*defaults to `false`*).
+- `Show context information`: display extra information for troubleshooting (*defaults to `false`*).
+- `Options`: append given options always to Mocha binary  (*optional*).
+- `Options for Debug`: append given options to Mocha binary to enable debugging.
+- `Env`: environment variables, useful for specifying `NODE_ENV`, etc.

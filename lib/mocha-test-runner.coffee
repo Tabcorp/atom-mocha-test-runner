@@ -31,7 +31,10 @@ module.exports =
       type: 'string'
       default: '--debug --debug-brk'
       description: 'Append given options to Mocha binary to enable debugging'
-
+    env:
+      type: 'string'
+      default: ''
+      description: 'Append environment variables'
 
   activate: (state) ->
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable

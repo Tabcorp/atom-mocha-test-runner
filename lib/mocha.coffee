@@ -18,6 +18,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
     @node = atom.config.get 'mocha-test-runner.nodeBinaryPath'
     @textOnly = atom.config.get 'mocha-test-runner.textOnlyOutput'
     @options = atom.config.get 'mocha-test-runner.options'
+    @env = atom.config.get 'mocha-test-runner.env'
 
     if debugMode
       optionsForDebug = atom.config.get 'mocha-test-runner.optionsForDebug'
@@ -36,6 +37,14 @@ module.exports = class MochaWrapper extends events.EventEmitter
       @context.test
     ]
 
+    env =
+      PATH: path.dirname(@node)
+
+    if @env
+      for index, name of @env.split ' '
+        [key, value] = name.split('=')
+        env[key] = value
+
     if @textOnly
       flags.push '--no-colors'
 
@@ -48,7 +57,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
 
     opts =
       cwd: @context.root
-      env: { PATH: path.dirname(@node) }
+      env: env
 
     @resetStatistics()
     @mocha = spawn @context.mocha, flags, opts
