@@ -8,7 +8,7 @@ exports.find = (editor) ->
   root = closestPackage editor.getPath()
   if root
     mochaCommand = if isWindows then 'mocha.cmd' else 'mocha'
-    mochaBinary = path.join root, 'node_modules', '.bin', 'mocha.cmd'
+    mochaBinary = path.join root, 'node_modules', '.bin', mochaCommand
     if not fs.existsSync mochaBinary
       mochaBinary = 'mocha'
     root: root
