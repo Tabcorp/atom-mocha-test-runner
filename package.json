@@ -28,9 +28,10 @@
   },
   "dependencies": {
     "ansi-html-stream": "0.0.3",
+    "atom-space-pen-views": "^2.0.3",
     "jsesc": "~0.4.3",
     "localeval": "~13.12.11",
     "ps-tree": "0.0.3",
-    "atom-space-pen-views": "^2.0.3"
+    "tree-kill": "0.0.6"
   }
 }
