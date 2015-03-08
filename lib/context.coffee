@@ -2,11 +2,13 @@ fs   = require 'fs'
 path = require 'path'
 util = require 'util'
 selectedTest = require './selected-test'
+isWindows = ///^win///.test process.platform
 
 exports.find = (editor) ->
   root = closestPackage editor.getPath()
   if root
-    mochaBinary = path.join root, 'node_modules', '.bin', 'mocha'
+    mochaCommand = if isWindows then 'mocha.cmd' else 'mocha'
+    mochaBinary = path.join root, 'node_modules', '.bin', 'mocha.cmd'
     if not fs.existsSync mochaBinary
       mochaBinary = 'mocha'
     root: root
