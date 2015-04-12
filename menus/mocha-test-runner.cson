@@ -1,10 +1,16 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
-  '.overlayer':
-      'Run Mocha tests': 'mocha-test-runner:run'
-      'Debug Mocha tests': 'mocha-test-runner:debug'
-      'Re-run last Mocha tests': 'mocha-test-runner:run-previous'
-      'Debug last Mocha tests': 'mocha-test-runner:debug-previous'
+  'atom-text-editor, .overlayer': [
+    {
+      'label': 'mocha-test-runner'
+      'submenu': [
+        { label: 'Run Mocha tests', command: 'mocha-test-runner:run' }
+        { label: 'Debug Mocha tests', command: 'mocha-test-runner:debug' }
+        { label: 'Re-run last Mocha tests', command: 'mocha-test-runner:run-previous' }
+        { label: 'Debug last Mocha tests', command: 'mocha-test-runner:debug-previous' }
+      ]
+    }
+  ]
 
 'menu': [
   {
