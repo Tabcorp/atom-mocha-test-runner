@@ -42,3 +42,11 @@ If you go to the settings pane, you can set the following values:
 - `Options`: append given options always to Mocha binary  (*optional*).
 - `Options for Debug`: append given options to Mocha binary to enable debugging.
 - `Env`: environment variables, useful for specifying `NODE_ENV`, etc.
+
+You can also change the style of the results window. Simply go to `Open Your Stylesheet` in the main menu, and add
+
+```css
+.mocha-test-runner .results {
+  font-size: 1.5em;
+}
+```
