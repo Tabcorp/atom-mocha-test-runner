@@ -28,11 +28,6 @@ module.exports.open = (extendedPath) ->
   [filename,row,col] = parts.slice(1)
   return unless filename?
 
-  projectPath = atom.project?.getPath()
-
-  if projectPath?
-    filename = path.resolve(projectPath,filename)
-
   unless fs.existsSync(filename)
     alert "File not found: #{filename}"
     return
