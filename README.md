@@ -6,14 +6,14 @@ Runs [Mocha](https://github.com/visionmedia/mocha) unit tests from within Atom.
 
 - `ctrl-alt-m` runs either:
   - the current test file
-  - or a single `it` / `describe` if the cursor is on that line
+  - or a single `it` / `describe` / `suite` / `test` if the cursor is on that line
 
-- `ctrl-alt-d` runs mocha as before, but with `Debug Options` added
+- `ctrl-alt-d` is the same as above, but with `Debug Options` added
 
 - `ctrl-alt-shift-m` re-runs the last test selection
   - even if you switched to another tab
 
-- `ctrl-alt-shift-d` re-runs mocha as before, but with `Debug Options` added
+- `ctrl-alt-shift-d` is the same as above, but with `Debug Options` added
 
 ![Demo](https://raw.github.com/TabDigital/atom-mocha-test-runner/master/demo.gif)
 
