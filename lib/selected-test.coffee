@@ -8,9 +8,11 @@ exports.fromEditor = (editor) ->
   return test
 
 getTestName = (line) ->
-  describe = extractMatch line, /describe\s*\(?\s*['"](.*)['"]/
-  it       = extractMatch line,       /it\s*\(?\s*['"](.*)['"]/
-  describe or it or null
+  describe   = extractMatch line, /describe\s*\(?\s*['"](.*)['"]/
+  suite      = extractMatch line, /suite\s*\(?\s*['"](.*)['"]/
+  it         = extractMatch line, /it\s*\(?\s*['"](.*)['"]/
+  test       = extractMatch line, /test\s*\(?\s*['"](.*)['"]/
+  describe or suite or it or test or null
 
 extractMatch = (line, regex) ->
   matches = regex.exec line
