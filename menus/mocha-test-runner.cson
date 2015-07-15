@@ -2,7 +2,7 @@
 'context-menu':
   'atom-text-editor, .overlayer': [
     {
-      'label': 'mocha-test-runner'
+      'label': 'Mocha Test Runner'
       'submenu': [
         { label: 'Run Mocha tests', command: 'mocha-test-runner:run' }
         { label: 'Debug Mocha tests', command: 'mocha-test-runner:debug' }
@@ -16,7 +16,7 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'mocha-test-runner'
+      'label': 'Mocha Test Runner'
       'submenu': [
         { 'label': 'Run tests', 'command': 'mocha-test-runner:run' }
         { 'label': 'Debug tests', 'command': 'mocha-test-runner:debug' }
