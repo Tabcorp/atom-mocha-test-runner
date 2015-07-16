@@ -46,9 +46,9 @@ module.exports = class MochaWrapper extends events.EventEmitter
         env[key] = value
 
     if @textOnly
-      flags.push '-C'
+      flags.push '--no-colors'
     else
-      flags.push '-c'
+      flags.push '--colors'
 
     if @context.grep
       flags.push '--grep'
