@@ -63,8 +63,12 @@ module.exports = class MochaWrapper extends events.EventEmitter
     @mocha = spawn @context.mocha, flags, opts
 
     if @textOnly
-      @mocha.stdout.on 'data', (data) => @emit 'output', data.toString()
-      @mocha.stderr.on 'data', (data) => @emit 'output', data.toString()
+      @mocha.stdout.on 'data', (data) =>
+        @parseStatistics data
+        @emit 'output', data.toString()
+      @mocha.stderr.on 'data', (data) =>
+        @parseStatistics data
+        @emit 'output', data.toString()
     else
       stream = ansi(chunked: false)
       @mocha.stdout.pipe stream
