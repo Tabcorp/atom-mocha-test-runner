@@ -6,6 +6,7 @@ escape = require 'jsesc'
 ansi   = require 'ansi-html-stream'
 psTree = require 'ps-tree'
 spawn  = require('child_process').spawn
+kill   = require 'tree-kill'
 
 clickablePaths = require './clickable-paths'
 
@@ -105,7 +106,8 @@ killTree = (pid, signal, callback) ->
     childrenPid = children.map (p) -> p.PID
     [pid].concat(childrenPid).forEach (tpid) ->
       try
-        process.kill tpid, signal
+        kill tpid, signal
+        # process.kill tpid, signal
       catch ex
         console.log "Failed to #{signal} #{tpid}"
     callback()
