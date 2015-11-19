@@ -60,6 +60,10 @@ class ResultView extends View
     @headingText.html "#{DEFAULT_HEADING_TEXT}..."
     @results.empty()
 
+  updateResultPanelHeight: ->
+    panelBody = @find '.panel-body'
+    panelBody.height (@height() - @heading.outerHeight())
+
   addLine: (line) ->
     if line isnt '\n'
       @results.append line
@@ -67,10 +71,12 @@ class ResultView extends View
   success: (stats) ->
     @heading.removeClass 'alert-info'
     @heading.addClass 'alert-success'
+    @updateResultPanelHeight()
 
   failure: (stats) ->
     @heading.removeClass 'alert-info'
     @heading.addClass 'alert-danger'
+    @updateResultPanelHeight()
 
   updateSummary: (stats) ->
     return unless stats?.length
