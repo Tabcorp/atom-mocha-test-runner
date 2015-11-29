@@ -1,4 +1,5 @@
 path        = require 'path'
+os          = require 'os'
 context     = require './context'
 Mocha       = require './mocha'
 ResultView  = require './result-view'
@@ -13,7 +14,7 @@ module.exports =
   config: # They are only read upon activation (atom bug?), thus the activationCommands for "settings-view:open" in package.json
     nodeBinaryPath:
       type: 'string'
-      default: '/usr/local/bin/node'
+      default: if os.platform() is 'win32' then 'C:\\Program Files\\nodejs\\node.exe' else '/usr/local/bin/node'
       description: 'Path to the node executable'
     textOnlyOutput:
       type: 'boolean'
