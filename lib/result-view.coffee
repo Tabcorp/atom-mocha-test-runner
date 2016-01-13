@@ -53,6 +53,7 @@ class ResultView extends View
   resizeView: ({pageY}) =>
     headingHeight =  @heading.outerHeight()
     @height Math.max(@resizeData.height + @resizeData.pageY - pageY,headingHeight)
+    @updateResultPanelHeight()
 
   reset: ->
     @heading.removeClass 'alert-success alert-danger'
