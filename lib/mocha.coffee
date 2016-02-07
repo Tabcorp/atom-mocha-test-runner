@@ -98,5 +98,5 @@ module.exports = class MochaWrapper extends events.EventEmitter
       @emit 'updateSummary', @stats
 
 killTree = (pid) ->
-    kill pid, 'SIGKILL', (err) ->
+    kill pid, 'SIGTERM', (err) ->
       console.log "Error killing process tree #{err}"
