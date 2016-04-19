@@ -4,12 +4,7 @@ util   = require 'util'
 events = require 'events'
 escape = require 'jsesc'
 ansi   = require 'ansi-html-stream'
-
-if process.platform is 'win32'
-  psTree = require 'process-tree'
-else
-  psTree = require 'ps-tree'
-  
+psTree = require 'process-tree'
 spawn  = require('child_process').spawn
 kill   = require 'tree-kill'
 
