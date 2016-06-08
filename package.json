@@ -1,7 +1,7 @@
 {
   "name": "mocha-test-runner",
   "main": "./lib/mocha-test-runner",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Run Mocha tests from within Atom",
   "repository": "https://github.com/TabDigital/atom-mocha-test-runner",
   "license": "MIT",
