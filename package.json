@@ -31,7 +31,7 @@
     "atom-space-pen-views": "^2.0.3",
     "jsesc": "~0.4.3",
     "localeval": "~13.12.11",
-    "process-tree": "1.0.0",
+    "process-tree": "1.0.2",
     "tree-kill": "0.0.6"
   }
 }
