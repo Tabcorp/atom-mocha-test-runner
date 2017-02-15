@@ -16,6 +16,10 @@ module.exports =
       type: 'string'
       default: if os.platform() is 'win32' then 'C:\\Program Files\\nodejs\\node.exe' else '/usr/local/bin/node'
       description: 'Path to the node executable'
+    mochaCommand:
+      type: 'string'
+      default: if os.platform() is 'win32' then 'mocha.cmd' else 'mocha'
+      description: 'Command to run mocha'
     textOnlyOutput:
       type: 'boolean'
       default: false
@@ -87,6 +91,7 @@ module.exports =
       nodeBinary = atom.config.get 'mocha-test-runner.nodeBinaryPath'
       resultView.addLine "Node binary:    #{nodeBinary}\n"
       resultView.addLine "Root folder:    #{currentContext.root}\n"
+      resultView.addLine "Mocha command:  #{currentContext.mochaCommand}\n"
       resultView.addLine "Path to mocha:  #{currentContext.mocha}\n"
       resultView.addLine "Debug-Mode:     #{inDebugMode}\n"
       resultView.addLine "Test file:      #{currentContext.test}\n"

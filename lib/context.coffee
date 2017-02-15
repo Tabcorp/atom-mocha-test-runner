@@ -7,7 +7,7 @@ isWindows = ///^win///.test process.platform
 exports.find = (editor) ->
   root = closestPackage editor.getPath()
   if root
-    mochaCommand = if isWindows then 'mocha.cmd' else 'mocha'
+    mochaCommand = atom.config.get 'mocha-test-runner.mochaCommand'
     mochaBinary = path.join root, 'node_modules', '.bin', mochaCommand
     if not fs.existsSync mochaBinary
       mochaBinary = 'mocha'
@@ -19,7 +19,7 @@ exports.find = (editor) ->
     root: path.dirname editor.getPath()
     test: path.basename editor.getPath()
     grep: selectedTest.fromEditor editor
-    mocha: 'mocha'
+    mocha: atom.config.get 'mocha-test-runner.mochaCommand'
 
 closestPackage = (folder) ->
   pkg = path.join folder, 'package.json'
