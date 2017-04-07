@@ -24,7 +24,11 @@ exports.find = (editor) ->
 closestPackage = (folder) ->
   pkg = path.join folder, 'package.json'
   if fs.existsSync pkg
-    folder
+    nm = path.join folder, 'node_modules'
+    if fs.existsSync nm
+      return folder
+    # Prefer package.json with node_modules if available.
+    closestPackage path.dirname(folder) ? folder
   else if folder is '/'
     null
   else
