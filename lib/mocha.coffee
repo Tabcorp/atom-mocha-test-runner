@@ -17,6 +17,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
   constructor: (@context, debugMode = false) ->
     @mocha = null
     @node = atom.config.get 'mocha-test-runner.nodeBinaryPath'
+    @mochaCommand = atom.config.get 'mocha-test-runner.mochaCommand'
     @textOnly = atom.config.get 'mocha-test-runner.textOnlyOutput'
     @options = atom.config.get 'mocha-test-runner.options'
     @env = atom.config.get 'mocha-test-runner.env'
@@ -39,7 +40,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
     ]
 
     env =
-      PATH: path.dirname(@node)
+      PATH: [process.env.PATH, path.dirname(@node)].join(':')
 
     if @env
       for index, name of @env.split ' '
