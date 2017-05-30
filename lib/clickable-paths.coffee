@@ -5,10 +5,9 @@ path    = require 'path'
 
 PATH_REGEX = /((?:\w:)?[^:\s\(\)]+):(\d+):(\d+)/g
 
-module.exports.link = (line) ->
+module.exports.link = (line, root) ->
   return null unless line?
-  line.replace(PATH_REGEX,'<a class="flink">$&</a>')
-
+  line.replace(PATH_REGEX, "<a class=\"flink\" data-root=\"#{root}\">$&</a>")
 
 module.exports.attachClickHandler = ->
   $(document).on 'click', '.flink', module.exports.clicked
@@ -18,8 +17,8 @@ module.exports.removeClickHandler = ->
 
 module.exports.clicked = ->
   extendedPath = this.innerHTML
-  module.exports.open(extendedPath)
-
+  rootPath = this.getAttribute 'data-root'
+  module.exports.open(path.join rootPath, extendedPath)
 
 module.exports.open = (extendedPath) ->
   parts = PATH_REGEX.exec(extendedPath)

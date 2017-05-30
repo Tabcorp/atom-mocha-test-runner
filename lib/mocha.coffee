@@ -79,7 +79,7 @@ module.exports = class MochaWrapper extends events.EventEmitter
       @mocha.stderr.pipe stream
       stream.on 'data', (data) =>
         @parseStatistics data
-        @emit 'output', clickablePaths.link data.toString()
+        @emit 'output', clickablePaths.link(data.toString(), @context.root)
 
     @mocha.on 'error', (err) =>
       @emit 'error', err
