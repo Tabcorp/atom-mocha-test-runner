@@ -37,7 +37,7 @@ In practice we found this is not an issue, and you still get fast TDD feedback l
 If you go to the settings pane, you can set the following values:
 
 - `Node binary path`: path to the `node` executable (*defaults to `/usr/local/bin/node`*).
-- `Mocha command`: specify alternate `mocha` command (ie, `mocha-webpack`) (*defaults to `mocha`*).
+- `Mocha command`: specify alternate `mocha` command (ie, [mocha-parallel-tests](https://github.com/yandex/mocha-parallel-tests) or [mocha-webpack](https://github.com/zinserjan/mocha-webpack)) (*defaults to `mocha`*).
 - `Text only`: remove any colors from the Mocha output (*defaults to `false`*).
 - `Show context information`: display extra information for troubleshooting (*defaults to `false`*).
 - `Options`: append given options always to Mocha binary  (*optional*).
