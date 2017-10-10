@@ -15,6 +15,7 @@ exports.find = (editor) ->
     test: path.relative root, editor.getPath()
     grep: selectedTest.fromEditor editor
     mocha: mochaBinary
+    mochaCommand: mochaCommand
   else
     root: path.dirname editor.getPath()
     test: path.basename editor.getPath()
