@@ -3,12 +3,13 @@ path    = require 'path'
 {Point} = require 'atom'
 {$}     = require 'atom-space-pen-views'
 
-PATH_REGEX = /((?:\w:)?[^:\s\(\)]+):(\d+):(\d+)/g
+# This matched only part of a path with a whitespace
+# PATH_REGEX = /((?:\w:)?[^:\s\(\)]+):(\d+):(\d+)/g
+PATH_REGEX = /((?:\w:)?[^:\(\)]+):(\d+):(\d+)/g
 
 module.exports.link = (line) ->
   return null unless line?
   line.replace(PATH_REGEX,'<a class="flink">$&</a>')
-
 
 module.exports.attachClickHandler = ->
   $(document).on 'click', '.flink', module.exports.clicked
@@ -19,7 +20,6 @@ module.exports.removeClickHandler = ->
 module.exports.clicked = ->
   extendedPath = this.innerHTML
   module.exports.open(extendedPath)
-
 
 module.exports.open = (extendedPath) ->
   parts = PATH_REGEX.exec(extendedPath)
