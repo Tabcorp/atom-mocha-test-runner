@@ -3,12 +3,13 @@ path    = require 'path'
 {Point} = require 'atom'
 {$}     = require 'atom-space-pen-views'
 
-PATH_REGEX = /((?:\w:)?[^:\s\(\)]+):(\d+):(\d+)/g
+# This matched only part of a path with a whitespace
+# PATH_REGEX = /((?:\w:)?[^:\s\(\)]+):(\d+):(\d+)/g
+PATH_REGEX = /((?:\w:)?[^:\(\)]+):(\d+):(\d+)/g
 
 module.exports.link = (line) ->
   return null unless line?
   line.replace(PATH_REGEX,'<a class="flink">$&</a>')
-
 
 module.exports.attachClickHandler = ->
   $(document).on 'click', '.flink', module.exports.clicked
@@ -20,13 +21,18 @@ module.exports.clicked = ->
   extendedPath = this.innerHTML
   module.exports.open(extendedPath)
 
-
 module.exports.open = (extendedPath) ->
   parts = PATH_REGEX.exec(extendedPath)
   return unless parts?
 
   [filename,row,col] = parts.slice(1)
   return unless filename?
+
+  for d in atom.project.getPaths()
+    fname = path.join(d, filename)
+    if fs.existsSync(fname)
+      filename = fname
+      break
 
   unless fs.existsSync(filename)
     alert "File not found: #{filename}"

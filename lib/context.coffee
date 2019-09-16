@@ -25,7 +25,7 @@ closestPackage = (folder) ->
   pkg = path.join folder, 'package.json'
   if fs.existsSync pkg
     folder
-  else if folder is '/'
+  else if folder is path.parse(folder).root
     null
   else
     closestPackage path.dirname(folder)
